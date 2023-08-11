@@ -1,6 +1,6 @@
 const { scanPages } = require('./index.js');
 
-class PagesScannerWebpackPlugin {
+class TemplateStructureGeneratorPlugin {
   constructor(options = {}) {
     this.options = {
       outputDirectory: '.pages-scanner',
@@ -25,4 +25,4 @@ class PagesScannerWebpackPlugin {
   }
 }
 
-module.exports = PagesScannerWebpackPlugin;
+module.exports = TemplateStructureGeneratorPlugin;

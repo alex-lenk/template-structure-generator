@@ -1,44 +1,52 @@
 {
-  "name": "pages-scanner",
-  "version": "3.0.4",
-  "author": "AlexLenk.ru",
-  "description": "Scans for page names and saves them.",
-  "main": "./PagesScannerWebpackPlugin.js",
+  "name": "template-structure-generator",
+  "version": "4.0.0",
+  "description": "Scans for page names based on templates and saves them.",
+  "main": "./TemplateStructureGeneratorPlugin.js",
+  "author": {
+    "name": "AlexLenk.ru",
+    "email": "me@alexlenk.ru",
+    "url": "https://alexlenk.ru/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alex-lenk/template-structure-generator.git"
+  },
+  "homepage": "https://github.com/alex-lenk/template-structure-generator",
+  "bugs": {
+    "url": "https://github.com/alex-lenk/template-structure-generator/issues"
+  },
+  "license": "ISC",
+  "engines": {
+    "node": ">=12"
+  },
+  "bin": {
+    "generate-template-structure": "./index.js"
+  },
+  "scripts": {
+    "generate": "generate-template-structure"
+  },
   "peerDependencies": {
     "webpack": "5.x"
   },
-  "bin": {
-    "scanPages": "./index.js"
-  },
-  "scripts": {
-    "scanPages": "scanPages"
+  "dependencies": {
+    "glob": "latest"
   },
   "keywords": [
+    "template",
+    "structure",
+    "generator",
     "pages",
     "scanner",
-    "pages-scanner"
+    "webpack",
+    "plugin"
+  ],
+  "files": [
+    "index.js"
   ],
   "standard": {
     "globals": [
       "it"
     ]
-  },
-  "dependencies": {
-    "glob": "^10.3.3"
-  },
-  "files": [
-    "build",
-    "index.mjs",
-    "!*.d.ts"
-  ],
-  "engines": {
-    "node": ">=12"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/alex-lenk/pages-scanner"
-  },
-  "homepage": "https://github.com/alex-lenk/pages-scanner",
-  "bugs": "https://github.com/alex-lenk/pages-scanner/issues",
-  "license": "ISC"
+  }
 }
