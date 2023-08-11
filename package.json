@@ -1,16 +1,19 @@
 {
   "name": "pages-scanner",
-  "version": "2.0.0",
+  "version": "2.3.1",
   "description": "Scans for page names and saves them.",
-  "type": "module",
-  "main": "webpack-plugin.cjs.js",
-  "module": "webpack-plugin.js",
+  "main": "./PagesScannerWebpackPlugin.cjs",
   "exports": {
-    ".": {
-      "import": "./webpack-plugin.js",
-      "require": "./dist/webpack-plugin.cjs.js"
-    }
+    ".": [
+      {
+        "import": "./PagesScannerWebpackPlugin.mjs",
+        "require": "./PagesScannerWebpackPlugin.cjs"
+      },
+      "./PagesScannerWebpackPlugin.cjs"
+    ]
   },
+  "module": "./PagesScannerWebpackPlugin.mjs",
+  "type": "module",
   "devDependencies": {
     "@babel/cli": "^7.22.10",
     "@babel/preset-env": "^7.22.10"
@@ -22,16 +25,33 @@
     "scanPages": "./index.js"
   },
   "scripts": {
-    "scanPages": "scanPages"
+    "scanPages": "scanPages",
+    "build": "npx babel PagesScannerWebpackPlugin.mjs -o PagesScannerWebpackPlugin.cjs"
   },
   "keywords": [
     "pages",
     "scanner",
     "pages-scanner"
   ],
+  "standard": {
+    "ignore": [
+      "**/example/**"
+    ],
+    "globals": [
+      "it"
+    ]
+  },
   "author": "AlexLenk.ru",
   "dependencies": {
     "glob": "^10.3.3"
+  },
+  "files": [
+    "build",
+    "index.mjs",
+    "!*.d.ts"
+  ],
+  "engines": {
+    "node": ">=12"
   },
   "license": "ISC"
 }
