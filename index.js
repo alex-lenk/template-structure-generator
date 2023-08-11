@@ -3,24 +3,31 @@ const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
 
-function scanPages(directoryGlob, outputDirectory = '.pages-scanner', outputFileName = 'pagesList.js', template = {
-  js: ['common.js'],
-  scss: ['common.scss'],
-}) {
+function scanPages(directoryGlob, outputDirectory, outputFileName, template) {
+  const files = extractPages(directoryGlob);
+  const pagesList = createPagesStructure(files, template);
+  saveResults(pagesList, outputDirectory, outputFileName);
+}
+
+function extractPages(directoryGlob) {
   const directory = path.dirname(directoryGlob);
 
   if (!fs.existsSync(directory)) {
     console.error(`Directory ${ directory } does not exist!`);
-    return;
+    return [];
   }
 
   const files = glob.sync(directoryGlob).sort();
 
   if (!files.length) {
     console.error(`No files found with the pattern: ${ directoryGlob }`);
-    return;
+    return [];
   }
 
+  return files;
+}
+
+function createPagesStructure(files, template) {
   const pagesList = {};
 
   files.forEach(file => {
@@ -28,6 +35,10 @@ function scanPages(directoryGlob, outputDirectory = '.pages-scanner', outputFile
     pagesList[fileName] = template;
   });
 
+  return pagesList;
+}
+
+function saveResults(pagesList, outputDirectory, outputFileName) {
   if (!fs.existsSync(outputDirectory)) {
     fs.mkdirSync(outputDirectory, { recursive: true });
   }
@@ -41,19 +52,6 @@ function scanPages(directoryGlob, outputDirectory = '.pages-scanner', outputFile
 
   fs.writeFileSync(outputPath, outputContent, 'utf8');
   console.log(`Scanned and saved file data to ${ outputPath }`);
-}
-
-if (require.main === module) {
-  const inputPath = process.argv[2];
-  const outputDir = process.argv[3] || '.pages-scanner';
-  const outputFileName = process.argv[4] || 'pagesList.js';
-
-  if (!inputPath) {
-    console.error('Please provide the input path as the first argument.');
-    process.exit(1);
-  }
-
-  scanPages(inputPath, outputDir, outputFileName);
 }
 
 module.exports = { scanPages };
