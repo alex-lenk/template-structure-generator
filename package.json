@@ -1,6 +1,6 @@
 {
   "name": "pages-scanner",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Scans for page names and saves them.",
   "type": "module",
   "main": "index.js",
@@ -16,5 +16,8 @@
     "pages-scanner"
   ],
   "author": "AlexLenk.ru",
+  "dependencies": {
+    "glob": "^10.3.3"
+  },
   "license": "ISC"
 }
