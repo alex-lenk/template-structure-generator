@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
@@ -33,10 +34,11 @@ function scanPages(directoryGlob) {
   }
 
   const outputPath = path.join(outputDirectory, 'pagesList.js');
-  const outputContent = `const pagesList = ${ JSON.stringify(pagesList, null, 2)
+  const outputContent = `module.exports = ${ JSON.stringify(pagesList, null, 2)
     .replace(/"/g, '\'')
     .replace(/(\[\s+'[^']+'\s+\])/g, (match, p1) => p1.replace(/\s+/g, ''))
-  };\nmodule.exports = { pagesList };`;
+    .replace(/}\s*$/, '}')
+  };\n`;
 
   fs.writeFileSync(outputPath, outputContent, 'utf8');
   console.log(`Scanned and saved file data to ${ outputPath }`);
