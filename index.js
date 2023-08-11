@@ -3,7 +3,10 @@ const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
 
-function scanPages(directoryGlob) {
+function scanPages(directoryGlob, outputDirectory = '.pages-scanner', outputFileName = 'pagesList.js', template = {
+  js: ['common.js'],
+  scss: ['common.scss'],
+}) {
   const directory = path.dirname(directoryGlob);
 
   if (!fs.existsSync(directory)) {
@@ -22,18 +25,14 @@ function scanPages(directoryGlob) {
 
   files.forEach(file => {
     const fileName = path.basename(file);
-    pagesList[fileName] = {
-      js: ['common.js'],
-      scss: ['common.scss'],
-    };
+    pagesList[fileName] = template;
   });
 
-  const outputDirectory = path.join('.', '.namesPages');
   if (!fs.existsSync(outputDirectory)) {
-    fs.mkdirSync(outputDirectory);
+    fs.mkdirSync(outputDirectory, { recursive: true });
   }
 
-  const outputPath = path.join(outputDirectory, 'pagesList.js');
+  const outputPath = path.join(outputDirectory, outputFileName);
   const outputContent = `module.exports = ${ JSON.stringify(pagesList, null, 2)
     .replace(/"/g, '\'')
     .replace(/(\[\s+'[^']+'\s+\])/g, (match, p1) => p1.replace(/\s+/g, ''))
@@ -46,10 +45,15 @@ function scanPages(directoryGlob) {
 
 if (require.main === module) {
   const inputPath = process.argv[2];
+  const outputDir = process.argv[3] || '.pages-scanner';
+  const outputFileName = process.argv[4] || 'pagesList.js';
+
   if (!inputPath) {
-    console.error('Please provide the path as an argument.');
+    console.error('Please provide the input path as the first argument.');
+    process.exit(1);
   }
-  scanPages(inputPath);
+
+  scanPages(inputPath, outputDir, outputFileName);
 }
 
 module.exports = { scanPages };

@@ -1,6 +1,6 @@
 {
   "name": "pages-scanner",
-  "version": "2.5.0",
+  "version": "3.0.0",
   "author": "AlexLenk.ru",
   "description": "Scans for page names and saves them.",
   "main": "./PagesScannerWebpackPlugin.js",
