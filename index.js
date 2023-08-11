@@ -5,14 +5,13 @@ import * as glob from 'glob';
 
 function scanPages(directoryGlob) {
   const directory = path.dirname(directoryGlob);
-  const ext = path.extname(directoryGlob);
 
   if (!fs.existsSync(directory)) {
     console.error(`Directory ${ directory } does not exist!`);
     return;
   }
 
-  const files = glob.sync(directoryGlob);
+  const files = glob.sync(directoryGlob).sort();
 
   if (!files.length) {
     console.error(`No files found with the pattern: ${ directoryGlob }`);
@@ -35,7 +34,10 @@ function scanPages(directoryGlob) {
   }
 
   const outputPath = path.join(outputDirectory, 'pagesList.js');
-  const outputContent = `const pagesList = ${ JSON.stringify(pagesList, null, 2) };\nmodule.exports = pagesList;`;
+  const outputContent = `const pagesList = ${JSON.stringify(pagesList, null, 2)
+    .replace(/"/g, "'")
+    .replace(/(\[\s+'[^']+'\s+\])/g, (match, p1) => p1.replace(/\s+/g, ''))
+  };\nexport default pagesList;`;
 
   fs.writeFileSync(outputPath, outputContent, 'utf8');
   console.log(`Scanned and saved file data to ${ outputPath }`);
@@ -43,8 +45,7 @@ function scanPages(directoryGlob) {
 
 const inputPath = process.argv[2];
 if (!inputPath) {
-  console.error('Please provide the path as an argument');
-  return;
+  console.error('Please provide the path as an argument.');
 }
 
 scanPages(inputPath);
