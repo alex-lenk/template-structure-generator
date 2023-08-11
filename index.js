@@ -34,8 +34,8 @@ function scanPages(directoryGlob) {
   }
 
   const outputPath = path.join(outputDirectory, 'pagesList.js');
-  const outputContent = `const pagesList = ${JSON.stringify(pagesList, null, 2)
-    .replace(/"/g, "'")
+  const outputContent = `const pagesList = ${ JSON.stringify(pagesList, null, 2)
+    .replace(/"/g, '\'')
     .replace(/(\[\s+'[^']+'\s+\])/g, (match, p1) => p1.replace(/\s+/g, ''))
   };\nexport default pagesList;`;
 
@@ -49,3 +49,5 @@ if (!inputPath) {
 }
 
 scanPages(inputPath);
+
+export { scanPages };
