@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-const fs = require('fs');
-const path = require('path');
-const glob = require('glob');
+import fs from 'fs';
+import path from 'path';
+import * as glob from 'glob';
 
 function scanPages(directoryGlob) {
   const directory = path.dirname(directoryGlob);
