@@ -1,7 +1,6 @@
-#!/usr/bin/env node
-import fs from 'fs';
-import path from 'path';
-import * as glob from 'glob';
+const fs = require('fs');
+const path = require('path');
+const glob = require('glob');
 
 function scanPages(directoryGlob) {
   const directory = path.dirname(directoryGlob);
@@ -37,17 +36,18 @@ function scanPages(directoryGlob) {
   const outputContent = `const pagesList = ${ JSON.stringify(pagesList, null, 2)
     .replace(/"/g, '\'')
     .replace(/(\[\s+'[^']+'\s+\])/g, (match, p1) => p1.replace(/\s+/g, ''))
-  };\nexport default pagesList;`;
+  };\nmodule.exports = { pagesList };`;
 
   fs.writeFileSync(outputPath, outputContent, 'utf8');
   console.log(`Scanned and saved file data to ${ outputPath }`);
 }
 
-const inputPath = process.argv[2];
-if (!inputPath) {
-  console.error('Please provide the path as an argument.');
+if (require.main === module) {
+  const inputPath = process.argv[2];
+  if (!inputPath) {
+    console.error('Please provide the path as an argument.');
+  }
+  scanPages(inputPath);
 }
 
-scanPages(inputPath);
-
-export { scanPages };
+module.exports = { scanPages };

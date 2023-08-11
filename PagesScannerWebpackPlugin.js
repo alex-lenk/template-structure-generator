@@ -1,10 +1,3 @@
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-  value: true,
-});
-
-exports.PagesScannerWebpackPlugin = void 0;
 const { scanPages } = require('./index.js');
 
 class PagesScannerWebpackPlugin {

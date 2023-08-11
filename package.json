@@ -1,19 +1,8 @@
 {
   "name": "pages-scanner",
-  "version": "2.3.1",
+  "version": "2.4.0",
   "description": "Scans for page names and saves them.",
-  "main": "./PagesScannerWebpackPlugin.cjs",
-  "exports": {
-    ".": [
-      {
-        "import": "./PagesScannerWebpackPlugin.mjs",
-        "require": "./PagesScannerWebpackPlugin.cjs"
-      },
-      "./PagesScannerWebpackPlugin.cjs"
-    ]
-  },
-  "module": "./PagesScannerWebpackPlugin.mjs",
-  "type": "module",
+  "main": "./PagesScannerWebpackPlugin.js",
   "devDependencies": {
     "@babel/cli": "^7.22.10",
     "@babel/preset-env": "^7.22.10"
@@ -52,6 +41,10 @@
   ],
   "engines": {
     "node": ">=12"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alex-lenk/pages-scanner"
   },
   "license": "ISC"
 }
