@@ -3,6 +3,7 @@ const { scanPages } = require('./index.js');
 class TemplateStructureGeneratorPlugin {
   constructor(options = {}) {
     this.options = {
+      directoryGlob: null,
       outputDirectory: '.pages-scanner',
       outputFileName: 'pagesList.js',
       template: {

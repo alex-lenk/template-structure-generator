@@ -1,6 +1,6 @@
 {
   "name": "template-structure-generator",
-  "version": "4.0.0",
+  "version": "4.1.5",
   "description": "Scans for page names based on templates and saves them.",
   "main": "./TemplateStructureGeneratorPlugin.js",
   "author": {
@@ -28,9 +28,6 @@
   },
   "peerDependencies": {
     "webpack": "5.x"
-  },
-  "dependencies": {
-    "glob": "latest"
   },
   "keywords": [
     "template",

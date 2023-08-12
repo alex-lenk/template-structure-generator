@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 const fs = require('fs');
 const path = require('path');
-const glob = require('glob');
 
 function scanPages(directoryGlob, outputDirectory, outputFileName, template) {
   const files = extractPages(directoryGlob);
@@ -17,7 +16,7 @@ function extractPages(directoryGlob) {
     return [];
   }
 
-  const files = glob.sync(directoryGlob).sort();
+  const files = fs.readdirSync(directory).map(file => path.join(directory, file)).sort();
 
   if (!files.length) {
     console.error(`No files found with the pattern: ${ directoryGlob }`);
@@ -46,8 +45,8 @@ function saveResults(pagesList, outputDirectory, outputFileName) {
   const outputPath = path.join(outputDirectory, outputFileName);
   const outputContent = `module.exports = ${ JSON.stringify(pagesList, null, 2)
     .replace(/"/g, '\'')
-    .replace(/(\[\s+'[^']+'\s+\])/g, (match, p1) => p1.replace(/\s+/g, ''))
-    .replace(/}\s*$/, '}')
+    .replace(/(\[\s+'[^']+'\s+])/g, (match, p1) => p1.replace(/\s+/g, ''))
+    .replace(/'([a-zA-Z0-9_]+)':/g, '$1:')
   };\n`;
 
   fs.writeFileSync(outputPath, outputContent, 'utf8');
